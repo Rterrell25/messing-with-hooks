@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   password: ""
 }
 
-const UseForm = ValidateLogin => {
+const UseForm = (ValidateLogin, props) => {
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [errors, setErrors] = useState({})
   const [user, setUser] = useState(null)
@@ -18,6 +18,15 @@ const UseForm = ValidateLogin => {
     event.preventDefault()
     setUser(formData)
     setErrors(ValidateLogin(formData))
+
+    const tempErrors = ValidateLogin(formData)
+    setErrors(tempErrors)
+
+    // Use the formData directly and the tempErrors
+    formData &&
+      !tempErrors.email &&
+      !tempErrors.password &&
+      props.history.push("/")
   }
   return {
     handleChange,

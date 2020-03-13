@@ -9,10 +9,18 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 
-const Register = () => {
+const Register = props => {
   const { handleChange, handleSubmit, formData, user, errors } = UseSignupForm(
-    ValidateSignup
+    ValidateSignup,
+    props
   )
+
+  const isInvalid =
+    !formData.email ||
+    !formData.password ||
+    !formData.confirmPassword ||
+    !formData.number
+
   const useStyles = makeStyles(theme => ({
     form: {
       textAlign: "center",
@@ -110,6 +118,7 @@ const Register = () => {
               color='primary'
               type='submit'
               fullWidth
+              disabled={isInvalid}
               className={classes.submit}
             >
               Submit

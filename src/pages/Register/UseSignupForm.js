@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   confirmPassword: ""
 }
 
-const UseForm = ValidateLogin => {
+const UseForm = (ValidateLogin, props) => {
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [errors, setErrors] = useState({})
   const [user, setUser] = useState(null)
@@ -21,7 +21,15 @@ const UseForm = ValidateLogin => {
     setUser(formData)
     setErrors(ValidateLogin(formData))
 
-    console.log(formData)
+    const tempErrors = ValidateLogin(formData)
+    setErrors(tempErrors)
+
+    formData &&
+      !tempErrors.email &&
+      !tempErrors.password &&
+      !tempErrors.confirmPassword &&
+      !tempErrors.number &&
+      props.history.push("/")
   }
   return {
     handleChange,
