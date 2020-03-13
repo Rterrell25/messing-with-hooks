@@ -8,7 +8,7 @@ export default function ValidateLogin(formData) {
   }
   if (!formData.password) {
     errors.password = "Password is required"
-  } else if (formData.password.length < 10) {
+  } else if (formData.password.length < 6) {
     errors.password = "Password must be longer than 10 characters"
   }
 
