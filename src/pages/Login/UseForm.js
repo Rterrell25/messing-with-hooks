@@ -10,10 +10,9 @@ const UseForm = (ValidateLogin, props) => {
   const [errors, setErrors] = useState({})
   const [user, setUser] = useState(null)
 
-  const handleChange = field => e => {
-    setFormData({ ...formData, [field]: e.target.value })
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData({ ...formData, [name]: value })
   }
-
   const handleSubmit = event => {
     event.preventDefault()
     setUser(formData)

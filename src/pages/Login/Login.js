@@ -69,7 +69,7 @@ const Login = props => {
             value={formData.email}
             error={errors.email ? true : false}
             helperText={errors.email}
-            onChange={handleChange("email")}
+            onChange={handleChange}
           />
           <TextField
             variant='outlined'
@@ -81,7 +81,7 @@ const Login = props => {
             value={formData.password}
             error={errors.password ? true : false}
             helperText={errors.password}
-            onChange={handleChange("password")}
+            onChange={handleChange}
           />
           <br />
           <Button

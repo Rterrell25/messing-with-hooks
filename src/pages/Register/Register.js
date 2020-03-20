@@ -73,7 +73,7 @@ const Register = props => {
               value={formData.email}
               error={errors.email ? true : false}
               helperText={errors.email}
-              onChange={handleChange("email")}
+              onChange={handleChange}
             />
             <TextField
               fullWidth
@@ -85,7 +85,7 @@ const Register = props => {
               value={formData.password}
               error={errors.password ? true : false}
               helperText={errors.password}
-              onChange={handleChange("password")}
+              onChange={handleChange}
             />
             <TextField
               fullWidth
@@ -97,7 +97,7 @@ const Register = props => {
               value={formData.confirmPassword}
               error={errors.confirmPassword ? true : false}
               helperText={errors.confirmPassword}
-              onChange={handleChange("confirmPassword")}
+              onChange={handleChange}
             />
             <TextField
               variant='outlined'
@@ -109,7 +109,7 @@ const Register = props => {
               value={formData.number}
               error={errors.number ? true : false}
               helperText={errors.number}
-              onChange={handleChange("number")}
+              onChange={handleChange}
             />
 
             <br />
