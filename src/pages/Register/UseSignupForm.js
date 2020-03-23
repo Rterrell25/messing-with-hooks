@@ -23,13 +23,6 @@ const UseForm = (ValidateLogin, props) => {
 
     const tempErrors = ValidateLogin(formData)
     setErrors(tempErrors)
-
-    formData &&
-      !tempErrors.email &&
-      !tempErrors.password &&
-      !tempErrors.confirmPassword &&
-      !tempErrors.number &&
-      props.history.push("/")
   }
   return {
     handleChange,

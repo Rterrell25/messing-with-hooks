@@ -50,8 +50,6 @@ const Login = props => {
     props
   )
 
-  const isInvalid = !formData.email || !formData.password
-
   return (
     <div style={{ textAlign: "center" }}>
       <Typography variant='h5' gutterBottom>
@@ -88,7 +86,6 @@ const Login = props => {
             variant='outlined'
             color='primary'
             type='submit'
-            disabled={isInvalid}
             className={classes.submit}
           >
             Submit
