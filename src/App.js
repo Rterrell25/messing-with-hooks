@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Register from "./pages/Register/Register"
 import Login from "./pages/Login/Login"
 import Home from "./pages/Home"
+import Github from "./pages/Github"
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
             <Route exact path='/' component={Home} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Register} />
+            <Route exact path='/github' component={Github} />
           </Switch>
         </div>
       </Router>
