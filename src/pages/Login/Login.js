@@ -93,6 +93,10 @@ const Login = props => {
         </form>
       </Container>
       <br />
+      {user &&
+        !errors.email &&
+        !errors.password &&
+        JSON.stringify(user, null, 2)}
     </div>
   )
 }
