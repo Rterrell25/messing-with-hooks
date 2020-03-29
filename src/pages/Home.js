@@ -1,50 +1,73 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback, useRef } from "react"
 import axios from "axios"
+
+const INITIAL_STATE = {
+  query: "react hooks"
+}
+const SECONDARY_STATE = {
+  query: ""
+}
 
 const Home = () => {
   const [submitting, setSubmitting] = useState(true)
   const [data, setData] = useState(null)
-  const [query, setQuery] = useState("react hooks")
+  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState(INITIAL_STATE)
+  const [error, setError] = useState(null)
+  const searchInputRef = useRef()
 
-  useEffect(() => {
-    // query can change, but don't actually trigger request unless submitting is true
-    const getData = async () => {
+  const getData = useCallback(async () => {
+    setLoading(true)
+    try {
       const response = await axios.get(
-        `http://hn.algolia.com/api/v1/search?query=${query}`
+        `http://hn.algolia.com/api/v1/search?query=${formData.query}`
       )
       setData(response.data)
-      console.log(response.data)
-      setSubmitting(false) // call is finished, set to false
+    } catch (err) {
+      setError(err)
     }
+    setLoading(false)
+  }, [formData.query])
 
-    // query can change, but don't actually trigger
-    // request unless submitting is true
-
+  useEffect(() => {
     if (submitting) {
       // is true initially, and again when button is clicked
-      getData()
+      getData().then(() => setSubmitting(false))
     }
-  }, [submitting, query])
+  }, [submitting, getData])
 
-  const handleChange = event => {
-    event.preventDefault()
-    setQuery(event.target.value)
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData({ ...formData, [name]: value })
   }
-
-  const getData = () => setSubmitting(true)
 
   const handleSearch = event => {
     event.preventDefault()
     getData()
   }
 
+  const handleClear = () => {
+    setFormData(SECONDARY_STATE)
+    searchInputRef.current.focus()
+  }
+
   return (
     <div>
       <form onSubmit={handleSearch}>
-        <input type='text' onChange={handleChange} value={query} />
-        <button type='submit'>Submit</button>
+        <input
+          type='text'
+          onChange={handleChange}
+          value={formData.query}
+          name='query'
+          ref={searchInputRef}
+        />
+        <button type='submit' onClick={() => setSubmitting(true)}>
+          Submit
+        </button>
+        <button type='button' onClick={handleClear}>
+          Clear
+        </button>
       </form>
-      {data &&
+      {data && !loading ? (
         data.hits.map(item => (
           <div key={item.objectID}>
             {item.url && (
@@ -54,7 +77,12 @@ const Home = () => {
               </>
             )}
           </div>
-        ))}
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
+
+      {error && <p>{error.message}</p>}
     </div>
   )
 }

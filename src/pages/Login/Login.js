@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 const Login = props => {
   const classes = useStyles()
 
-  const { handleChange, handleSubmit, formData, user, errors } = UseForm(
+  const { handleChange, handleSubmit, formData, errors } = UseForm(
     ValidateLogin,
     props
   )
@@ -93,10 +93,6 @@ const Login = props => {
         </form>
       </Container>
       <br />
-      {user &&
-        !errors.email &&
-        !errors.password &&
-        JSON.stringify(user, null, 2)}
     </div>
   )
 }
