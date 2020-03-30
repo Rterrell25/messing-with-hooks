@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Radio from "@material-ui/core/Radio"
 import RadioGroup from "@material-ui/core/RadioGroup"
@@ -15,17 +15,9 @@ const INITIAL_STATE = {
 
 const Github = () => {
   const [data, setData] = useState(null)
-  const [covid, setCovid] = useState(null)
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [updated, setUpdated] = useState(false)
   const [created, setCreated] = useState(false)
-
-  const fetchData = useCallback(() => {
-    axios.get(`https://covid19.mathdro.id/api/`).then(res => {
-      setCovid(res.data)
-      console.log(res.data)
-    })
-  }, [setCovid])
 
   const fetchGit = () => {
     axios
@@ -61,8 +53,7 @@ const Github = () => {
 
   useEffect(() => {
     fetchGit()
-    fetchData()
-  }, [fetchData])
+  }, [])
 
   return (
     <div>
@@ -98,7 +89,6 @@ const Github = () => {
           <FormControlLabel value='Ruby' control={<Radio />} label='Ruby' />
         </RadioGroup>
       </FormControl>
-
       {!data ? (
         <h1>Loading...</h1>
       ) : (

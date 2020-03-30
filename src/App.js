@@ -6,6 +6,7 @@ import Register from "./pages/Register/Register"
 import Login from "./pages/Login/Login"
 import Home from "./pages/Home"
 import Github from "./pages/Github"
+import Covid from "./pages/Covid"
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Register} />
             <Route exact path='/github' component={Github} />
+            <Route exact path='/covid' component={Covid} />
           </Switch>
         </div>
       </Router>
