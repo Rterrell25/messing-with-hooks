@@ -89,7 +89,6 @@ const Github = () => {
           <FormControlLabel value='Ruby' control={<Radio />} label='Ruby' />
         </RadioGroup>
       </FormControl>
-
       {!data ? (
         <h1>Loading...</h1>
       ) : (

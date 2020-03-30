@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 const Login = props => {
   const classes = useStyles()
 
-  const { handleChange, handleSubmit, formData, user, errors } = UseForm(
+  const { handleChange, handleSubmit, formData, errors } = UseForm(
     ValidateLogin,
     props
   )
