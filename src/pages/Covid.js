@@ -1,65 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react"
-import axios from "axios"
+import React from "react"
 import Select from "../components/Select"
 import moment from "moment"
+import Testies from "../components/Testies"
+import Country from "../components/Country.js"
+import Data from "../components/Data"
 
 const Test = () => {
-  const [covid, setCovid] = useState(null)
-  const [query, setQuery] = useState("")
-  const [country, setCountry] = useState(null)
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
-
-  const fetchData = useCallback(() => {
-    axios.get(`https://covid19.mathdro.id/api/`).then(res => {
-      setCovid(res.data)
-    })
-  }, [setCovid])
-
-  const fetchSingleCountry = useCallback(() => {
-    axios.get(`https://covid19.mathdro.id/api/countries`).then(res => {
-      setCountry(res.data)
-    })
-  }, [setCountry])
-
-  const fetchCountry = useCallback(async () => {
-    setLoading(true)
-    try {
-      const response = await axios.get(
-        `https://covid19.mathdro.id/api/countries/${query}`
-      )
-      setData(response.data)
-    } catch (err) {
-      console.log(err)
-    }
-    setLoading(false)
-  }, [setData, query])
-
-  const countries = []
-  country !== null &&
-    country.countries.forEach(item => {
-      countries.push(item.name)
-    })
-  const filteredCountries = countries.map((country, i) => {
-    return (
-      <option key={i} value={country}>
-        {country}
-      </option>
-    )
-  })
-
-  const handleChange = event => {
-    setQuery(event.target.value)
-  }
-
-  useEffect(() => {
-    fetchCountry()
-  }, [fetchCountry])
-
-  useEffect(() => {
-    fetchData()
-    fetchSingleCountry()
-  }, [fetchData, fetchSingleCountry])
+  const { filteredCountries, handleChange, query } = Country()
+  const { data, loading } = Data(query)
+  const { covid } = Testies()
 
   return (
     <div>
@@ -70,10 +19,7 @@ const Test = () => {
           <div>Patients Recovered:{covid.recovered.value}</div>
           <div>Death Count:{covid.deaths.value}</div>
           <div>
-            Last Updated:{" "}
-            {moment(covid.lastUpdate)
-              .startOf("day")
-              .fromNow()}
+            Last Updated: {moment(covid.lastUpdate).startOf("day").fromNow()}
           </div>
         </div>
       )}
@@ -94,10 +40,7 @@ const Test = () => {
               <div>Confirmed Cases:{data.recovered.value}</div>
               <div>Death Count:{data.deaths.value}</div>
               <div>
-                Last Updated:{" "}
-                {moment(data.lastUpdate)
-                  .startOf("day")
-                  .fromNow()}
+                Last Updated: {moment(data.lastUpdate).startOf("day").fromNow()}
               </div>
             </div>
           )
