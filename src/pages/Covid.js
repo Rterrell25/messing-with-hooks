@@ -11,8 +11,12 @@ import Data from "../components/Data"
 
 const Test = () => {
   const { filteredCountries, handleChange, query } = Country()
-  const { data, loading } = Data(query)
-  const { covid } = Testies()
+  const { data, loading } = Data({
+    query: query,
+    initial: null,
+  })
+
+  const { covid } = Testies(null)
 
   return (
     <div>

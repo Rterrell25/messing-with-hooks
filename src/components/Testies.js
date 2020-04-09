@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
 
-const Test = () => {
-  const [covid, setCovid] = useState(null)
+const Test = (initial) => {
+  const [covid, setCovid] = useState(initial)
   const fetchData = useCallback(() => {
     axios.get(`https://covid19.mathdro.id/api/`).then((res) => {
       setCovid(res.data)

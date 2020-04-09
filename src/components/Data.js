@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react"
 import axios from "axios"
 
-const Data = (query) => {
-  const [data, setData] = useState(null)
+const Data = ({ query, initial }) => {
+  const [data, setData] = useState(initial)
   const [loading, setLoading] = useState(false)
+
   const fetchCountry = useCallback(async () => {
     setLoading(true)
     try {
