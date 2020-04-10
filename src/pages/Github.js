@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
+import React, { useState, useContext } from "react"
 import Radio from "@material-ui/core/Radio"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
@@ -8,26 +7,19 @@ import FormLabel from "@material-ui/core/FormLabel"
 import TextField from "@material-ui/core/TextField"
 import moment from "moment"
 
+// context
+import { GithubContext } from "../contexts/GithubContext"
+
 const INITIAL_STATE = {
   language: "All",
-  search: ""
+  search: "",
 }
 
 const Github = () => {
-  const [data, setData] = useState(null)
+  const { data } = useContext(GithubContext)
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [updated, setUpdated] = useState(false)
   const [created, setCreated] = useState(false)
-
-  const fetchGit = () => {
-    axios
-      .get(`https://api.github.com/users/rterrell25/repos?`)
-      .then(res => {
-        setData(res.data)
-        console.log(res.data)
-      })
-      .catch(err => console.log(err))
-  }
 
   const handleUpdated = () => {
     setUpdated(!updated)
@@ -47,13 +39,9 @@ const Github = () => {
       })
   }
 
-  const handleInputChange = field => e => {
+  const handleInputChange = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value })
   }
-
-  useEffect(() => {
-    fetchGit()
-  }, [])
 
   return (
     <div>
@@ -93,31 +81,26 @@ const Github = () => {
         <h1>Loading...</h1>
       ) : (
         data
-          .filter(data => {
+          .filter((data) => {
             if (formData.language === "All") return true
             return data.language === formData.language
           })
-          .filter(data => {
+          .filter((data) => {
             if (formData.search === "") return true
             return (data.name + data.language)
               .toLowerCase()
               .includes(formData.search.toLowerCase())
           })
-          .map(user => (
+          .map((user) => (
             <div key={user.id}>
               <div>{user.name}</div>
               <div>{user.language}</div>
               <div>
-                Updated:{" "}
-                {moment(user.updated_at)
-                  .startOf("day")
-                  .fromNow()}
+                Updated: {moment(user.updated_at).startOf("day").fromNow()}
               </div>
               <div>
                 Created:
-                {moment(user.created_at)
-                  .startOf("day")
-                  .fromNow()}
+                {moment(user.created_at).startOf("day").fromNow()}
               </div>
             </div>
           ))

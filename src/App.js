@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useContext, useEffect, useCallback } from "react"
+import axios from "axios"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 // Route Imports
@@ -8,7 +9,26 @@ import Home from "./pages/Home"
 import Github from "./pages/Github"
 import Covid from "./pages/Covid"
 
+// context
+import { GithubContext } from "./contexts/GithubContext"
+
 const App = () => {
+  const { setData } = useContext(GithubContext)
+
+  const fetchGit = useCallback(async () => {
+    return axios
+      .get(`https://api.github.com/users/rterrell25/repos?`)
+      .then((res) => {
+        setData(res.data)
+        console.log(res.data)
+      })
+      .catch((err) => console.log(err))
+  }, [setData])
+
+  useEffect(() => {
+    fetchGit()
+  }, [fetchGit])
+
   return (
     <div className='App'>
       <Router>
