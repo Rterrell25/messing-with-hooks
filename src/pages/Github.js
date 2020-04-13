@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import Radio from "@material-ui/core/Radio"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
@@ -8,7 +8,7 @@ import TextField from "@material-ui/core/TextField"
 import moment from "moment"
 
 // context
-import { GithubContext } from "../contexts/GithubContext"
+import { useGithub } from "../contexts/GithubContext"
 
 const INITIAL_STATE = {
   language: "All",
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
 }
 
 const Github = () => {
-  const { data } = useContext(GithubContext)
+  const { data } = useGithub()
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [updated, setUpdated] = useState(false)
   const [created, setCreated] = useState(false)

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react"
+import React, { useState, createContext, useContext } from "react"
 
 export const GithubContext = createContext()
 
@@ -11,3 +11,5 @@ export const GithubProvider = (props) => {
     </GithubContext.Provider>
   )
 }
+
+export const useGithub = () => useContext(GithubContext)
