@@ -1,40 +1,39 @@
-import React, { useState, useEffect, useCallback, useRef } from "react"
-import axios from "axios"
+import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 
 const INITIAL_STATE = {
-  query: "react hooks"
+  query: 'react hooks'
 }
-const SECONDARY_STATE = {
-  query: ""
+const CLEAR_STATE = {
+  query: ''
+}
+
+const getData = url => {
+  return axios.get(url)
 }
 
 const Home = () => {
-  const [submitting, setSubmitting] = useState(true)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState(INITIAL_STATE)
+  const [url, setUrl] = useState(
+    'http://hn.algolia.com/api/v1/search?query=react hooks'
+  )
   const [error, setError] = useState(null)
   const searchInputRef = useRef()
 
-  const getData = useCallback(async () => {
-    setLoading(true)
-    try {
-      const response = await axios.get(
-        `http://hn.algolia.com/api/v1/search?query=${formData.query}`
-      )
-      setData(response.data)
-    } catch (err) {
-      setError(err)
-    }
-    setLoading(false)
-  }, [formData.query])
-
   useEffect(() => {
-    if (submitting) {
-      // is true initially, and again when button is clicked
-      getData().then(() => setSubmitting(false))
-    }
-  }, [submitting, getData])
+    setLoading(true)
+    getData(url, setLoading)
+      .then(res => {
+        setLoading(false)
+        setData(res.data)
+      })
+      .catch(error => {
+        setLoading(false)
+        setError(error)
+      })
+  }, [url])
 
   const handleChange = ({ target: { name, value } }) => {
     setFormData({ ...formData, [name]: value })
@@ -42,11 +41,11 @@ const Home = () => {
 
   const handleSearch = event => {
     event.preventDefault()
-    getData()
+    setUrl(`http://hn.algolia.com/api/v1/search?query=${formData.query}`)
   }
 
   const handleClear = () => {
-    setFormData(SECONDARY_STATE)
+    setFormData(CLEAR_STATE)
     searchInputRef.current.focus()
   }
 
@@ -60,9 +59,7 @@ const Home = () => {
           name='query'
           ref={searchInputRef}
         />
-        <button type='submit' onClick={() => setSubmitting(true)}>
-          Submit
-        </button>
+        <button type='submit'>Submit</button>
         <button type='button' onClick={handleClear}>
           Clear
         </button>

@@ -2,7 +2,7 @@ import { useState } from "react"
 
 const INITIAL_STATE = {
   email: "",
-  password: ""
+  password: "",
 }
 
 const UseForm = (ValidateLogin, props) => {
@@ -13,7 +13,7 @@ const UseForm = (ValidateLogin, props) => {
   const handleChange = ({ target: { name, value } }) => {
     setFormData({ ...formData, [name]: value })
   }
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     setUser(formData)
     setErrors(ValidateLogin(formData))
@@ -25,14 +25,14 @@ const UseForm = (ValidateLogin, props) => {
     formData &&
       !tempErrors.email &&
       !tempErrors.password &&
-      props.history.push("/")
+      setFormData(INITIAL_STATE)
   }
   return {
     handleChange,
     handleSubmit,
     formData,
     user,
-    errors
+    errors,
   }
 }
 

@@ -24,6 +24,7 @@ const Country = () => {
 
   const fetchSingleCountry = useCallback(() => {
     axios.get(`https://covid19.mathdro.id/api/countries`).then((res) => {
+      console.log("i'm fetch single country", res.data)
       setCountry(res.data)
     })
   }, [setCountry])

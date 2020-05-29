@@ -9,10 +9,9 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 
-const Register = props => {
-  const { handleChange, handleSubmit, formData, user, errors } = UseSignupForm(
-    ValidateSignup,
-    props
+const Register = () => {
+  const { handleChange, handleSubmit, formData, errors } = UseSignupForm(
+    ValidateSignup
   )
 
   const isInvalid =
@@ -21,12 +20,12 @@ const Register = props => {
     !formData.confirmPassword ||
     !formData.number
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     form: {
       textAlign: "center",
       width: "100%", // Fix IE 11 issue.
       marginTop: theme.spacing(1),
-      position: "relative"
+      position: "relative",
     },
 
     paper: {
@@ -34,25 +33,25 @@ const Register = props => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      position: "relative"
+      position: "relative",
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      position: "relative"
+      position: "relative",
     },
     progress: {
-      position: "absolute"
+      position: "absolute",
     },
     progressTwo: {
       position: "absolute",
-      top: "20px"
+      top: "20px",
     },
     progressThree: {
       display: "block",
       marginLeft: "auto",
       marginRight: "auto",
-      width: "40%"
-    }
+      width: "40%",
+    },
   }))
   const classes = useStyles()
   return (
@@ -124,13 +123,6 @@ const Register = props => {
               Submit
             </Button>
           </form>
-
-          {user &&
-            !errors.email &&
-            !errors.password &&
-            !errors.confirmPassword &&
-            !errors.number &&
-            JSON.stringify(user, null, 2)}
         </div>
       </Container>
     </div>

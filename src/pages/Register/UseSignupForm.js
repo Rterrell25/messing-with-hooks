@@ -4,32 +4,26 @@ const INITIAL_STATE = {
   email: "",
   number: "",
   password: "",
-  confirmPassword: ""
+  confirmPassword: "",
 }
 
-const UseForm = (ValidateLogin, props) => {
+const UseForm = (ValidateLogin) => {
   const [formData, setFormData] = useState(INITIAL_STATE)
   const [errors, setErrors] = useState({})
-  const [user, setUser] = useState(null)
 
   const handleChange = ({ target: { name, value } }) => {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    setUser(formData)
     setErrors(ValidateLogin(formData))
-
-    const tempErrors = ValidateLogin(formData)
-    setErrors(tempErrors)
   }
   return {
     handleChange,
     handleSubmit,
     formData,
-    user,
-    errors
+    errors,
   }
 }
 
